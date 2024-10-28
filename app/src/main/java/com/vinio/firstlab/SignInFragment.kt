@@ -38,15 +38,6 @@ class SignInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-/*
-
-        // Настраиваем edge-to-edge отображение
-        ViewCompat.setOnApplyWindowInsetsListener(view.findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-*/
 
         btn = view.findViewById(R.id.btn_auth)
         regBtn = view.findViewById(R.id.btn_register)
@@ -61,7 +52,7 @@ class SignInFragment : Fragment() {
 
         // Заполняем поля логина и пароля при регистрации через intent
 //        register()
-//        classRegister()
+        classRegister()
     }
 
     // Логика аутентификации
@@ -84,22 +75,36 @@ class SignInFragment : Fragment() {
         }
     }
 
-/*    // Заполняем поля логина и пароля, переданные через Intent
+  // Заполняем поля логина и пароля, переданные через Intent
     private fun register() {
-        val login = activity?.intent?.getStringExtra("login")
-        val password = activity?.intent?.getStringExtra("password")
+        val args = arguments
+        if (args != null) {
+          val login = args.getString("email")
+          val password = args.getString("password")
 
-        view?.findViewById<TextView>(R.id.et_login)?.text = login
-        view?.findViewById<TextView>(R.id.et_password)?.text = password
+          view?.findViewById<EditText>(R.id.et_login)?.setText(login)
+          view?.findViewById<EditText>(R.id.et_password)?.setText(password)
+        } else {
+          view?.findViewById<EditText>(R.id.et_login)?.setText("")
+          view?.findViewById<EditText>(R.id.et_password)?.setText("")
+        }
     }
 
+
     private fun classRegister() {
-        val user = activity?.intent?.getSerializableExtra("user") as? User
-        user?.let {
-            view?.findViewById<TextView>(R.id.et_login)?.text = user.email
-            view?.findViewById<TextView>(R.id.et_password)?.text = user.password
+        val args = arguments
+        if (args != null) {
+            val user = args.getSerializable("user") as? User
+            user?.let {
+                view?.findViewById<EditText>(R.id.et_login)?.setText(it.email)
+                view?.findViewById<EditText>(R.id.et_password)?.setText(it.password)
+            }
+        } else {
+            view?.findViewById<EditText>(R.id.et_login)?.setText("")
+            view?.findViewById<EditText>(R.id.et_password)?.setText("")
         }
-    }*/
+    }
+
 
     override fun onStart() {
         super.onStart()

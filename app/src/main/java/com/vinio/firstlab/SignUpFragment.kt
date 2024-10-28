@@ -1,6 +1,5 @@
 package com.vinio.firstlab
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,8 +8,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 
 class SignUpFragment : Fragment() {
@@ -32,13 +29,6 @@ class SignUpFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-/*
-        // Настраиваем edge-to-edge отображение
-        ViewCompat.setOnApplyWindowInsetsListener(view.findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }*/
 
         // Инициализация UI элементов
         btn = view.findViewById(R.id.btn_register)
@@ -65,7 +55,8 @@ class SignUpFragment : Fragment() {
                 }
                 else -> {
                     Toast.makeText(requireContext(), "Всё окей!", Toast.LENGTH_SHORT).show()
-//                    withClass()
+//                    withString()
+                    withClass()
                 }
             }
         }
@@ -76,26 +67,23 @@ class SignUpFragment : Fragment() {
         }
     }
 
-  /*  // Метод для передачи данных через объект User
-    private fun withClass() {
-        val user = User(
+
+    private fun withString() {
+        (activity as? MainActivity)?.navigateToSignIn(
             userName.text.toString(),
             login.text.toString(),
             password.text.toString()
         )
-        val intent = Intent(requireContext(), SignInActivity::class.java)
-        intent.putExtra("user", user)
-        startActivity(intent)
+    }
+    private fun withClass() {
+        val user = User(
+            username = userName.text.toString(),
+            email = login.text.toString(),
+            password = password.text.toString()
+        )
+        (activity as? MainActivity)?.navigateToSignIn(user)
     }
 
-    // Метод для передачи данных через строки
-    private fun withString() {
-        val intent = Intent(requireContext(), SignInActivity::class.java)
-        intent.putExtra("username", userName.text.toString())
-        intent.putExtra("login", login.text.toString())
-        intent.putExtra("password", password.text.toString())
-        startActivity(intent)
-    }*/
 
     override fun onStart() {
         super.onStart()

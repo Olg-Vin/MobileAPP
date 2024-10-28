@@ -30,14 +30,6 @@ class OnboardFragment : Fragment() {
 //    проводим настройки элементов фрагмента
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-/*
-        // Настраиваем edge-to-edge отображение
-        ViewCompat.setOnApplyWindowInsetsListener(view.findViewById(R.id.onboard)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }*/
-
         val btn: Button = view.findViewById(R.id.btn_next)
         btn.setOnClickListener {
             (activity as? MainActivity)?.navigateToSignIn()

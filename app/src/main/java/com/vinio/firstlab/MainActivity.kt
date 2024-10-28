@@ -33,24 +33,42 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
-    // Функция для удаления фрагмента
     private fun removeFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .remove(fragment)
             .commit()
     }
 
-    // Пример использования: переход на SignInFragment
     fun navigateToSignIn() {
         replaceFragment(SignInFragment())
     }
 
-    // Пример использования: переход на SignUpFragment
+//    через строки
+    fun navigateToSignIn(userName: String, email: String, password: String) {
+        val signInFragment = SignInFragment().apply {
+            arguments = Bundle().apply {
+                putString("userName", userName)
+                putString("email", email)
+                putString("password", password)
+            }
+        }
+        replaceFragment(signInFragment)
+    }
+//    через класс
+    fun navigateToSignIn(user: User) {
+        val signInFragment = SignInFragment().apply {
+            arguments = Bundle().apply {
+                putSerializable("user", user)
+            }
+        }
+        replaceFragment(signInFragment)
+    }
+
+
     fun navigateToSignUp() {
         replaceFragment(SignUpFragment())
     }
 
-    // Пример использования: переход на HomeFragment
     fun navigateToHome() {
         replaceFragment(HomeFragment())
     }
