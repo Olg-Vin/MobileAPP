@@ -36,6 +36,15 @@ android {
 }
 
 dependencies {
+    // Jetpack Compose integration
+    implementation(libs.androidx.navigation.compose)
+    // Views/Fragments integration
+    implementation(libs.androidx.navigation.fragment.v284)
+    implementation(libs.androidx.navigation.ui)
+    // Feature module support for Fragments
+    implementation(libs.androidx.navigation.dynamic.features.fragment)
+    // Testing Navigation
+    androidTestImplementation(libs.androidx.navigation.testing)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
