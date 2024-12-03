@@ -5,9 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.vinio.firstlab.databinding.FragmentOnboardBinding
 
 /**
  * Стартовый экран (фрагмент):
@@ -17,19 +17,24 @@ import androidx.navigation.fragment.findNavController
  */
 class OnboardFragment : Fragment() {
 
+    private var _binding: FragmentOnboardBinding? = null
+    private val binding: FragmentOnboardBinding
+        get() = (_binding
+            ?: RuntimeException("FragmentOnboardBinding == null")) as FragmentOnboardBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_onboard, container, false)
+        _binding = FragmentOnboardBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val btn: Button = view.findViewById(R.id.btn_next)
-        btn.setOnClickListener {
-            Log.d("TAG", "Click on sing in button")
+        binding.btnNext.setOnClickListener {
+            Log.d("TAG", "Click on sign in button")
             findNavController().navigate(R.id.action_board_to_signIn)
         }
     }

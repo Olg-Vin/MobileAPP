@@ -5,12 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.navigateUp
+import com.vinio.firstlab.databinding.FragmentSigninBinding
 
 /**
  * Экран входа (фрагмент):
@@ -19,10 +17,10 @@ import androidx.navigation.ui.navigateUp
  */
 class SignInFragment : Fragment() {
 
-    private lateinit var btn: Button
-    private lateinit var regBtn: Button
-    private lateinit var login: EditText
-    private lateinit var password: EditText
+    private var _binding: FragmentSigninBinding? = null
+    private val binding: FragmentSigninBinding
+        get() = (_binding
+            ?: RuntimeException("FragmentSigninBinding == null")) as FragmentSigninBinding
 
     private val origin_login = "login@login"
     private val origin_password = "password"
@@ -31,54 +29,59 @@ class SignInFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_signin, container, false)
+        _binding = FragmentSigninBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        btn = view.findViewById(R.id.btn_auth)
-        regBtn = view.findViewById(R.id.btn_register)
-        login = view.findViewById(R.id.et_login)
-        password = view.findViewById(R.id.et_password)
-
         auth()
 
-        regBtn.setOnClickListener {
+        binding.btnRegister.setOnClickListener {
             findNavController().navigate(R.id.action_signIn_to_signUp)
         }
 
-        // Заполняем поля логина и пароля при регистрации через intent
 //        register()
         classRegister()
     }
 
-    // Логика аутентификации
     private fun auth() {
-        btn.setOnClickListener {
+        binding.btnAuth.setOnClickListener {
             when {
-                login.text.isBlank() -> {
-                    Toast.makeText(requireContext(), "Логин не может быть пустым", Toast.LENGTH_SHORT).show()
+                binding.etLogin.text.isBlank() -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "Логин не может быть пустым",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-                password.text.isBlank() -> {
-                    Toast.makeText(requireContext(), "Вы не ввели пароль", Toast.LENGTH_SHORT).show()
+
+                binding.etPassword.text.isBlank() -> {
+                    Toast.makeText(requireContext(), "Вы не ввели пароль", Toast.LENGTH_SHORT)
+                        .show()
                 }
-                login.text.toString() == origin_login && password.text.toString() == origin_password -> {
+
+                binding.etLogin.text.toString() == origin_login && binding.etPassword.text.toString() == origin_password -> {
                     findNavController().navigate(R.id.action_signIn_to_home)
                 }
+
                 else -> {
-                    Toast.makeText(requireContext(), "Логин или пароль не верны", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Логин или пароль не верны",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
     }
 
-  // Заполняем поля логина и пароля, переданные через Intent
 //    private fun register() {
 //        val args = SignInFragmentArgs.fromBundle(requireArguments())
 //        if (args.name != "-" && args.password != "-") {
-//          login.setText(args.name)
-//          password.setText(args.password)
+//            binding.etLogin.setText(args.name)
+//            binding.etPassword.setText(args.password)
 //        }
 //    }
 
@@ -86,15 +89,9 @@ class SignInFragment : Fragment() {
     private fun classRegister() {
         val args = SignInFragmentArgs.fromBundle(requireArguments())
         val user = args.user
-
-        // Если объект `user` передан, заполняем поля
         if (user != null) {
-            login.setText(user.email)
-            password.setText(user.password)
-        }
-
-        regBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_signIn_to_signUp)
+            binding.etLogin.setText(user.email)
+            binding.etPassword.setText(user.password)
         }
     }
 
