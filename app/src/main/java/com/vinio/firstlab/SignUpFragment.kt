@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 
 class SignUpFragment : Fragment() {
 
@@ -63,25 +64,21 @@ class SignUpFragment : Fragment() {
 
         // Переход к экрану входа
         entranceBtn.setOnClickListener {
-            (activity as? MainActivity)?.navigateToSignIn()
+            findNavController().navigate(R.id.action_signUp_to_singIn)
         }
     }
 
 
-    private fun withString() {
-        (activity as? MainActivity)?.navigateToSignIn(
-            userName.text.toString(),
-            login.text.toString(),
-            password.text.toString()
-        )
-    }
+//    private fun withString() {
+//        val action = SignUpFragmentDirections
+//            .actionSignUpToSingIn(userName.text.toString(), password.text.toString())
+//        findNavController().navigate(action)
+//    }
+//
     private fun withClass() {
-        val user = User(
-            username = userName.text.toString(),
-            email = login.text.toString(),
-            password = password.text.toString()
-        )
-        (activity as? MainActivity)?.navigateToSignIn(user)
+        val user = User(userName.text.toString(), login.text.toString(), password.text.toString())
+        val action = SignUpFragmentDirections.actionSignUpToSingIn(user)
+        findNavController().navigate(action)
     }
 
 

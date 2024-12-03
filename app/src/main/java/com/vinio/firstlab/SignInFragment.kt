@@ -1,6 +1,5 @@
 package com.vinio.firstlab
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,11 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.navigateUp
 
 /**
  * Экран входа (фрагмент):
@@ -47,7 +45,7 @@ class SignInFragment : Fragment() {
         auth()
 
         regBtn.setOnClickListener {
-            (activity as? MainActivity)?.navigateToSignUp()
+            findNavController().navigate(R.id.action_signIn_to_signUp)
         }
 
         // Заполняем поля логина и пароля при регистрации через intent
@@ -66,7 +64,7 @@ class SignInFragment : Fragment() {
                     Toast.makeText(requireContext(), "Вы не ввели пароль", Toast.LENGTH_SHORT).show()
                 }
                 login.text.toString() == origin_login && password.text.toString() == origin_password -> {
-                    (activity as? MainActivity)?.navigateToHome()
+                    findNavController().navigate(R.id.action_signIn_to_home)
                 }
                 else -> {
                     Toast.makeText(requireContext(), "Логин или пароль не верны", Toast.LENGTH_SHORT).show()
@@ -76,53 +74,48 @@ class SignInFragment : Fragment() {
     }
 
   // Заполняем поля логина и пароля, переданные через Intent
-    private fun register() {
-        val args = arguments
-        if (args != null) {
-          val login = args.getString("email")
-          val password = args.getString("password")
-
-          view?.findViewById<EditText>(R.id.et_login)?.setText(login)
-          view?.findViewById<EditText>(R.id.et_password)?.setText(password)
-        } else {
-          view?.findViewById<EditText>(R.id.et_login)?.setText("")
-          view?.findViewById<EditText>(R.id.et_password)?.setText("")
-        }
-    }
+//    private fun register() {
+//        val args = SignInFragmentArgs.fromBundle(requireArguments())
+//        if (args.name != "-" && args.password != "-") {
+//          login.setText(args.name)
+//          password.setText(args.password)
+//        }
+//    }
 
 
     private fun classRegister() {
-        val args = arguments
-        if (args != null) {
-            val user = args.getSerializable("user") as? User
-            user?.let {
-                view?.findViewById<EditText>(R.id.et_login)?.setText(it.email)
-                view?.findViewById<EditText>(R.id.et_password)?.setText(it.password)
-            }
-        } else {
-            view?.findViewById<EditText>(R.id.et_login)?.setText("")
-            view?.findViewById<EditText>(R.id.et_password)?.setText("")
+        val args = SignInFragmentArgs.fromBundle(requireArguments())
+        val user = args.user
+
+        // Если объект `user` передан, заполняем поля
+        if (user != null) {
+            login.setText(user.email)
+            password.setText(user.password)
+        }
+
+        regBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_signIn_to_signUp)
         }
     }
 
 
     override fun onStart() {
         super.onStart()
-        Log.d("TAG", "Fragment onStart")
+        Log.d("TAG", "Fragment singIn onStart")
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d("TAG", "Fragment onResume")
+        Log.d("TAG", "Fragment singIn onResume")
     }
 
     override fun onStop() {
         super.onStop()
-        Log.d("TAG", "Fragment onStop")
+        Log.d("TAG", "Fragment singIn onStop")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d("TAG", "Fragment onDestroyView")
+        Log.d("TAG", "Fragment singIn onDestroyView")
     }
 }
