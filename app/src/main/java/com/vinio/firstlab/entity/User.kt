@@ -1,4 +1,4 @@
-package com.vinio.firstlab
+package com.vinio.firstlab.entity
 
 import java.io.Serializable
 

@@ -1,4 +1,4 @@
-package com.vinio.firstlab
+package com.vinio.firstlab.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.vinio.firstlab.R
 import com.vinio.firstlab.databinding.FragmentOnboardBinding
 
 /**

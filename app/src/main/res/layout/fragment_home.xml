@@ -21,6 +21,12 @@
             android:textStyle="bold"
             android:layout_marginBottom="28dp"/>
 
+        <Button
+            android:id="@+id/toRecycle"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Список!"/>
+
         <include layout="@layout/chat_element" />
         <include layout="@layout/chat_element" />
         <include layout="@layout/chat_element" />

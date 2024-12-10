@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("androidx.navigation.safeargs.kotlin")
+    kotlin("plugin.serialization") version "2.0.20"
 }
 
 android {
@@ -42,14 +43,23 @@ android {
 }
 
 dependencies {
-    // Jetpack Compose integration
+    implementation("org.slf4j:slf4j-simple:2.0.9")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.7.3")
+
+    implementation(libs.kotlinx.serialization.json)
+
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.okhttp)
+    implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.logging)
+    implementation(libs.ktor.client.serialization)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
+
     implementation(libs.androidx.navigation.compose)
-    // Views/Fragments integration
     implementation(libs.androidx.navigation.fragment.v284)
     implementation(libs.androidx.navigation.ui)
-    // Feature module support for Fragments
     implementation(libs.androidx.navigation.dynamic.features.fragment)
-    // Testing Navigation
     androidTestImplementation(libs.androidx.navigation.testing)
 
     implementation(libs.androidx.core.ktx)

@@ -1,4 +1,4 @@
-package com.vinio.firstlab
+package com.vinio.firstlab.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.vinio.firstlab.R
 import com.vinio.firstlab.databinding.FragmentHomeBinding
 
 /**
@@ -30,6 +32,9 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.toRecycle.setOnClickListener {
+            findNavController().navigate(R.id.action_home_to_recycle)
+        }
         Log.d("TAG", "Fragment onViewCreated")
     }
 

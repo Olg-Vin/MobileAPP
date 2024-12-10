@@ -1,4 +1,4 @@
-package com.vinio.firstlab
+package com.vinio.firstlab.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.vinio.firstlab.R
 import com.vinio.firstlab.databinding.FragmentSigninBinding
 
 /**
@@ -22,7 +23,7 @@ class SignInFragment : Fragment() {
         get() = (_binding
             ?: RuntimeException("FragmentSigninBinding == null")) as FragmentSigninBinding
 
-    private val origin_login = "login@login"
+    private val origin_login = "login"
     private val origin_password = "password"
 
     override fun onCreateView(

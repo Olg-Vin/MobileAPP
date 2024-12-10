@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/onboardFragment"
-        android:name="com.vinio.firstlab.OnboardFragment"
+        android:name="com.vinio.firstlab.fragments.OnboardFragment"
         tools:layout="@layout/fragment_onboard">
         <action
             android:id="@+id/action_board_to_signIn"
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.vinio.firstlab.SignInFragment"
+        android:name="com.vinio.firstlab.fragments.SignInFragment"
         tools:layout="@layout/fragment_signin">
 <!--        <argument-->
 <!--            android:name="name"-->
@@ -29,7 +29,7 @@
 <!--            android:defaultValue="-" />-->
         <argument
             android:name="user"
-            app:argType="com.vinio.firstlab.User"
+            app:argType="com.vinio.firstlab.entity.User"
             app:nullable="true"
             android:defaultValue="@null"/>
         <action
@@ -42,7 +42,7 @@
 
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.vinio.firstlab.SignUpFragment"
+        android:name="com.vinio.firstlab.fragments.SignUpFragment"
         tools:layout="@layout/fragment_signup">
         <action
             android:id="@+id/action_signUp_to_singIn"
@@ -57,7 +57,7 @@
 <!--                android:defaultValue="-" />-->
             <argument
                 android:name="user"
-                app:argType="com.vinio.firstlab.User" />
+                app:argType="com.vinio.firstlab.entity.User" />
         </action>
 
         <action
@@ -67,8 +67,17 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.vinio.firstlab.HomeFragment"
+        android:name="com.vinio.firstlab.fragments.HomeFragment"
         tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_home_to_recycle"
+            app:destination="@id/recycleNav"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/recycleNav"
+        android:name="com.vinio.firstlab.network.RecyclerViewFragment"
+        tools:layout="@layout/fragment_recycler_view">
     </fragment>
 
 </navigation>
