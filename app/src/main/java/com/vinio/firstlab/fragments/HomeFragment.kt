@@ -35,6 +35,9 @@ class HomeFragment : Fragment() {
         binding.toRecycle.setOnClickListener {
             findNavController().navigate(R.id.action_home_to_recycle)
         }
+        binding.toSettings.setOnClickListener {
+            findNavController().navigate(R.id.action_home_to_settings)
+        }
         Log.d("TAG", "Fragment onViewCreated")
     }
 

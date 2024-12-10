@@ -45,6 +45,7 @@ android {
 dependencies {
     implementation("org.slf4j:slf4j-simple:2.0.9")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.7.3")
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
 
     implementation(libs.kotlinx.serialization.json)
 
@@ -60,6 +61,7 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.v284)
     implementation(libs.androidx.navigation.ui)
     implementation(libs.androidx.navigation.dynamic.features.fragment)
+    implementation(libs.androidx.datastore.preferences.core.jvm)
     androidTestImplementation(libs.androidx.navigation.testing)
 
     implementation(libs.androidx.core.ktx)

@@ -40,29 +40,25 @@ class RecyclerViewFragment : Fragment() {
             binding.recycle.adapter = adapter
         }
     }
+
     override fun onStart() {
         super.onStart()
-        Log.d("Recycler", "ФРАГМЕНТ_СТАРТАНУЛ")
+        Log.d("TAG", "Fragment recycle onStart")
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d("Recycler", "ФРАГМЕНТ_ПРОДОЛЖИЛСЯ")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d("Recycler", "ФРАГМЕНТ_ОСТАНОВИЛСЯ")
+        Log.d("TAG", "Fragment recycle onResume")
     }
 
     override fun onStop() {
         super.onStop()
-        Log.d("Recycler", "ФРАГМЕНТ_ОСТАНОВИЛСЯ")
+        Log.d("TAG", "Fragment recycle onStop")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        Log.d("Recycler", "ФРАГМЕНТ_ЛИКВИДИРОВАН")
+        Log.d("TAG", "Fragment recycle onDestroyView")
     }
 }

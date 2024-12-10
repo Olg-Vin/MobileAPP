@@ -72,12 +72,21 @@
         <action
             android:id="@+id/action_home_to_recycle"
             app:destination="@id/recycleNav"/>
+        <action
+            android:id="@+id/action_home_to_settings"
+            app:destination="@id/settingsNav"/>
     </fragment>
 
     <fragment
         android:id="@+id/recycleNav"
         android:name="com.vinio.firstlab.network.RecyclerViewFragment"
         tools:layout="@layout/fragment_recycler_view">
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsNav"
+        android:name="com.vinio.firstlab.saves.SettingsFragment"
+        tools:layout="@layout/fragment_settings">
     </fragment>
 
 </navigation>
