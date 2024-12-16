@@ -24,7 +24,7 @@ class RecyclerViewFragment : Fragment() {
         get() = (_binding
             ?: RuntimeException("FragmentRecyclerViewBinding == null")) as FragmentRecyclerViewBinding
 
-    private val dataSource = CharacterDataSource()
+    private lateinit var dataSource: CharacterDataSource
     private lateinit var adapter: CharacterAdapter
 
     override fun onCreateView(
@@ -40,6 +40,8 @@ class RecyclerViewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.recycle.layoutManager = LinearLayoutManager(requireContext())
+
+        dataSource = CharacterDataSource(requireContext())
 
         CoroutineScope(Dispatchers.Main).launch {
             val characters = dataSource.getSomeCharacters()

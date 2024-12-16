@@ -48,6 +48,7 @@ dependencies {
     implementation("androidx.room:room-runtime:2.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
+    implementation("com.google.code.gson:gson:2.10")
 
     implementation("org.slf4j:slf4j-simple:2.0.9")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.7.3")
