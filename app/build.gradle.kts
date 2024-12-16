@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("androidx.navigation.safeargs.kotlin")
     kotlin("plugin.serialization") version "2.0.20"
+    id("kotlin-kapt")
 }
 
 android {
@@ -43,9 +44,15 @@ android {
 }
 
 dependencies {
+    implementation("androidx.room:room-ktx:2.6.1")
+    implementation("androidx.room:room-runtime:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
+
     implementation("org.slf4j:slf4j-simple:2.0.9")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.7.3")
     implementation("androidx.datastore:datastore-preferences:1.1.1")
+
 
     implementation(libs.kotlinx.serialization.json)
 

@@ -1,5 +1,9 @@
 package com.vinio.firstlab.network
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.util.Log
 import com.vinio.firstlab.entity.Character
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -14,9 +18,13 @@ import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.get
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.TimeoutCancellationException
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
+import java.net.UnknownHostException
 import kotlin.time.Duration.Companion.seconds
 
 
@@ -25,7 +33,7 @@ interface CharacterDataSourceApi {
     suspend fun getSomeCharacters(): Result<List<Character>>
 }
 
-class CharacterDataSource : CharacterDataSourceApi {
+class CharacterDataSource() : CharacterDataSourceApi {
     private val json = Json {
         ignoreUnknownKeys = true
     }
@@ -59,29 +67,35 @@ class CharacterDataSource : CharacterDataSourceApi {
             Result.failure(Exception("Request timed out", e))
         } catch (e: Exception) {
             Result.failure(Exception("Unknown error occurred", e))
+        } catch (e: UnknownHostException) {
+            Result.failure(Exception("Network error: Unable to resolve host.", e))
         }
     }
 
+    // TODO закрыть ktor
     override suspend fun getSomeCharacters(): Result<List<Character>> {
         val path = "https://anapioficeandfire.com/api/characters?page=2&pageSize=50"
         return try {
             val response: List<Character> = client.get(path).body()
             Result.success(response)
         } catch (e: ClientRequestException) { // 4xx errors
+            Log.d("[RESP ERR]", "Client error: ${e.response.status.description}")
             Result.failure(Exception("Client error: ${e.response.status.description}", e))
         } catch (e: ServerResponseException) { // 5xx errors
+            Log.d("[RESP ERR]", "Server error: ${e.response.status.description}.")
             Result.failure(Exception("Server error: ${e.response.status.description}", e))
         } catch (e: TimeoutCancellationException) {
+            Log.d("[RESP ERR]", "Request timed out.")
             Result.failure(Exception("Request timed out", e))
+        } catch (e: UnknownHostException) {
+            Log.d("[RESP ERR]", "Network error: Unable to resolve host.")
+            Result.failure(Exception("Network error: Unable to resolve host.", e))
         } catch (e: Exception) {
+            Log.d("[RESP ERR]", "Unknown error occurred.")
             Result.failure(Exception("Unknown error occurred", e))
         }
     }
 }
 
-fun main() {
-    val characterDataSource = CharacterDataSource()
-    runBlocking {
-        println(characterDataSource.getCharacter().getOrNull())
-    }
-}
+
+

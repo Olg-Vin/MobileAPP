@@ -3,6 +3,7 @@ package com.vinio.firstlab.saves
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +17,9 @@ import androidx.lifecycle.lifecycleScope
 import com.vinio.firstlab.databinding.FragmentSettingsBinding
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import java.lang.Float
+import java.io.File
+
+val Context.dataStore by preferencesDataStore(name = "settings")
 
 class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
@@ -25,7 +28,6 @@ class SettingsFragment : Fragment() {
             ?: RuntimeException("FragmentSettingsBinding == null")) as FragmentSettingsBinding
 
     lateinit var sharedPreferences: SharedPreferences
-    val Context.dataStore by preferencesDataStore(name = "settings")
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,6 +42,7 @@ class SettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         sharedFun()
         storeFun()
+        loadFile()
     }
 
     private fun sharedFun() {
@@ -113,6 +116,78 @@ class SettingsFragment : Fragment() {
             lifecycleScope.launch {
                 requireContext().dataStore.edit { preferences ->
                     preferences[stringPreferencesKey("notifier")] = isChecked.toString()
+                }
+            }
+        }
+    }
+
+    private fun loadFile() {
+        val fileName = "2_character_list.txt"
+        val backupName = "2_character_backup_list.txt"
+        val downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        val internalDir = requireContext().filesDir
+
+        lifecycleScope.launch {
+            val file = File(downloadDir, fileName)
+            val backupFile = File(internalDir, backupName)
+
+            if (file.exists()) {
+                binding.fileStatusText.text = "Файл существует: ${file.absolutePath}"
+            } else {
+                if (backupFile.exists()) {
+                    binding.fileStatusText.text = "Файл не найден в Downloads, но есть резервная копия."
+                } else {
+                    binding.fileStatusText.text = "Файл не найден"
+                }
+            }
+        }
+
+        binding.deleteButton.setOnClickListener {
+            lifecycleScope.launch {
+                val file = File(downloadDir, fileName)
+                if (file.exists()) {
+
+                    val backupFile = File(internalDir, backupName)
+                    file.inputStream().use { input ->
+                        backupFile.outputStream().use { output ->
+                            input.copyTo(output)
+                        }
+                    }
+                    Toast.makeText(requireContext(), "Файл сохранён в резервную копию", Toast.LENGTH_SHORT).show()
+
+                    if (file.delete()) {
+                        Toast.makeText(requireContext(), "Файл удалён", Toast.LENGTH_SHORT).show()
+                        binding.fileStatusText.text = "Файл удалён"
+                    } else {
+                        Toast.makeText(requireContext(), "Ошибка при удалении файла", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(requireContext(), "Файл не найден", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        // Восстановление файла
+        binding.restoreButton.setOnClickListener {
+            lifecycleScope.launch {
+                val backupFile = File(internalDir, backupName)
+                val file = File(downloadDir, fileName)
+                if (backupFile.exists()) {
+                    try {
+                        // Перемещаем файл из внутреннего хранилища в Downloads
+                        backupFile.inputStream().use { input ->
+                            file.outputStream().use { output ->
+                                input.copyTo(output)
+                            }
+                        }
+                        Toast.makeText(requireContext(), "Файл восстановлен в Downloads", Toast.LENGTH_SHORT).show()
+                        binding.fileStatusText.text = "Файл восстановлен: ${file.absolutePath}"
+//                        binding.restoreButton.visibility = View.GONE
+                    } catch (e: Exception) {
+                        Toast.makeText(requireContext(), "Ошибка при восстановлении файла", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(requireContext(), "Нет резервной копии", Toast.LENGTH_SHORT).show()
                 }
             }
         }

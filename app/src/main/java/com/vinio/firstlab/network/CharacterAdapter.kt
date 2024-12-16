@@ -29,31 +29,32 @@ class CharacterAdapter(private val characterList: List<Character>)
         RecyclerView.ViewHolder(binding.root) {
         fun bind(character: Character) {
             with(binding) {
-                if (character.name.isNullOrBlank()) { name.visibility = View.GONE
-                } else { name.text = character.name }
-
-                if (character.culture.isNullOrBlank()) { culture.visibility = View.GONE
-                } else { culture.text = character.culture }
-
-                if (character.born.isNullOrBlank()) { born.visibility = View.GONE
-                } else { born.text = character.born }
-
-                if (character.titles?.isEmpty() == true) { titles.visibility = View.GONE
-                } else { titles.text = character.titles.toString()}
-
-                if (character.aliases?.isEmpty() == true) { aliases.visibility = View.GONE
-                } else { aliases.text = character.aliases.toString()}
-
-                if (character.playedBy?.isEmpty() == true) { playedBy.visibility = View.GONE
-                } else { playedBy.text = character.playedBy.toString()}
-
-                /*name.text = character.name ?: "-"
+                name.text = character.name ?: "-"
                 culture.text = character.culture ?: "-"
                 born.text = character.born ?: "-"
                 titles.text = (character.titles ?: "-").toString()
                 aliases.text = (character.aliases ?: "-").toString()
-                playedBy.text = (character.playedBy ?: "-").toString()*/
+                playedBy.text = (character.playedBy ?: "-").toString()
             }
         }
     }
 }
+//
+//
+//if (character.name.isNullOrBlank()) { name.visibility = View.GONE
+//} else { name.text = character.name }
+//
+//if (character.culture.isNullOrBlank()) { culture.visibility = View.GONE
+//} else { culture.text = character.culture }
+//
+//if (character.born.isNullOrBlank()) { born.visibility = View.GONE
+//} else { born.text = character.born }
+//
+//if (character.titles?.isEmpty() == true) { titles.visibility = View.GONE
+//} else { titles.text = character.titles.toString()}
+//
+//if (character.aliases?.isEmpty() == true) { aliases.visibility = View.GONE
+//} else { aliases.text = character.aliases.toString()}
+//
+//if (character.playedBy?.isEmpty() == true) { playedBy.visibility = View.GONE
+//} else { playedBy.text = character.playedBy.toString()}
