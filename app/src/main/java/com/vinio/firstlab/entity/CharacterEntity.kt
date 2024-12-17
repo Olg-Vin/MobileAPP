@@ -8,8 +8,8 @@ import androidx.room.TypeConverters
 @Entity(tableName = "characters")
 data class CharacterEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0, // Генерируемый уникальный идентификатор для базы данных
-    val name: String?,
+    val id: Int = 0,
+    var name: String?,
     val culture: String?,
     val born: String?,
     @TypeConverters(ListConverter::class)

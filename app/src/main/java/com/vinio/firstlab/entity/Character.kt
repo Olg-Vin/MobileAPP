@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Character(
-    val name: String? = null,
+    var name: String? = null,
     val culture: String? = null,
     val born: String? = null,
     val titles: List<String>? = null,

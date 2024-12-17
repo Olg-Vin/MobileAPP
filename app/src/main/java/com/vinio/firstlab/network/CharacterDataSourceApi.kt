@@ -6,6 +6,7 @@ import com.vinio.firstlab.AppDatabase
 import com.vinio.firstlab.entity.Character
 import com.vinio.firstlab.entity.CharacterDao
 import com.vinio.firstlab.entity.CharacterEntity
+import com.vinio.firstlab.entity.CharacterRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
@@ -27,7 +28,7 @@ import kotlin.time.Duration.Companion.seconds
 
 interface CharacterDataSourceApi {
     suspend fun getCharacter(): Result<Character>
-    suspend fun getSomeCharacters(): Result<List<Character>>
+    suspend fun getSomeCharacters(page: Int): Result<List<Character>>
 }
 
 class CharacterDataSource(private val context: Context) : CharacterDataSourceApi {
@@ -70,13 +71,12 @@ class CharacterDataSource(private val context: Context) : CharacterDataSourceApi
     }
 
     // TODO закрыть ktor
-    override suspend fun getSomeCharacters(): Result<List<Character>> {
-        val path = "https://anapioficeandfire.com/api/characters?page=2&pageSize=50"
+    override suspend fun getSomeCharacters(page: Int): Result<List<Character>> {
+        Log.d("[MYRESP]", page.toString())
+        val path = "https://anapioficeandfire.com/api/characters?page=$page&pageSize=50"
         return try {
             val response: List<Character> = client.get(path).body()
-            val dao = AppDatabase.DatabaseProvider.getDatabase(context).characterDao()
-            // Сохраняем персонажей в базу данных
-            saveCharactersToDatabase(response, dao)
+            Log.d("[MYRESP]", response.toString())
             Result.success(response)
         } catch (e: ClientRequestException) { // 4xx errors
             Log.d("[RESP ERR]", "Client error: ${e.response.status.description}")
@@ -95,30 +95,6 @@ class CharacterDataSource(private val context: Context) : CharacterDataSourceApi
             Result.failure(Exception("Unknown error occurred", e))
         }
     }
-
-    suspend fun saveCharactersToDatabase(characters: List<Character>, dao: CharacterDao) {
-        // Преобразуем список Character в CharacterEntity
-        val characterEntities = characters.toEntityList()
-        // Сохраняем список в базу данных
-        dao.insertCharacters(characterEntities)
-    }
-
-
-    fun Character.toEntity(): CharacterEntity {
-        return CharacterEntity(
-            name = this.name,
-            culture = this.culture,
-            born = this.born,
-            titles = this.titles,
-            aliases = this.aliases,
-            playedBy = this.playedBy
-        )
-    }
-
-    fun List<Character>.toEntityList(): List<CharacterEntity> {
-        return this.map { it.toEntity() }
-    }
-
 }
 
 

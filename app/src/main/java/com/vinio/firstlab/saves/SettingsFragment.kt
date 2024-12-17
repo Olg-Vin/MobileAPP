@@ -14,7 +14,10 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.vinio.firstlab.AppDatabase
 import com.vinio.firstlab.databinding.FragmentSettingsBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.io.File
@@ -43,6 +46,12 @@ class SettingsFragment : Fragment() {
         sharedFun()
         storeFun()
         loadFile()
+        binding.deleteDB.setOnClickListener {
+            val daoRep = AppDatabase.DatabaseProvider.getDatabase(requireContext()).characterDao()
+            CoroutineScope(Dispatchers.Main).launch {
+                daoRep.deleteAllCharacters()
+            }
+        }
     }
 
     private fun sharedFun() {

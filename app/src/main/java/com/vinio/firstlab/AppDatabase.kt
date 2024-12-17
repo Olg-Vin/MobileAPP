@@ -18,14 +18,16 @@ abstract class AppDatabase : RoomDatabase() {
         private var dbInstance: AppDatabase? = null
 
         fun getDatabase(context: Context): AppDatabase {
-            return dbInstance ?: synchronized(this) {
+            if (dbInstance != null) {
+                return dbInstance as AppDatabase
+            } else {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
                     "game_of_thrones.db"
                 ).build()
                 dbInstance = instance
-                instance
+                return instance
             }
         }
     }
