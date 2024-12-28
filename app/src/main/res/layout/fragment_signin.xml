@@ -35,6 +35,7 @@
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:layout_margin="20dp"
+            android:text="login"
 
             android:hint="Введите адрес эл.почты" />
 
@@ -43,6 +44,7 @@
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:layout_marginBottom="20dp"
+            android:text="password"
 
             android:hint="Введите пароль"/>
 

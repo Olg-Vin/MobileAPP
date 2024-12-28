@@ -1,15 +1,14 @@
-package com.vinio.firstlab
+package com.vinio.firstlab.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.vinio.firstlab.R
+import com.vinio.firstlab.databinding.FragmentOnboardBinding
 
 /**
  * Стартовый экран (фрагмент):
@@ -19,40 +18,45 @@ import androidx.fragment.app.Fragment
  */
 class OnboardFragment : Fragment() {
 
-//    инициализируем сам фрагмент
+    private var _binding: FragmentOnboardBinding? = null
+    private val binding: FragmentOnboardBinding
+        get() = (_binding
+            ?: RuntimeException("FragmentOnboardBinding == null")) as FragmentOnboardBinding
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_onboard, container, false)
+        _binding = FragmentOnboardBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-//    проводим настройки элементов фрагмента
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val btn: Button = view.findViewById(R.id.btn_next)
-        btn.setOnClickListener {
-            (activity as? MainActivity)?.navigateToSignIn()
+        binding.btnNext.setOnClickListener {
+            Log.d("TAG", "Click on sign in button")
+            findNavController().navigate(R.id.action_board_to_signIn)
         }
     }
 
     override fun onStart() {
         super.onStart()
-        Log.d("TAG", "Fragment onStart")
+        Log.d("TAG", "Fragment onBoard onStart")
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d("TAG", "Fragment onResume")
+        Log.d("TAG", "Fragment onBoard onResume")
     }
 
     override fun onStop() {
         super.onStop()
-        Log.d("TAG", "Fragment onStop")
+        Log.d("TAG", "Fragment onBoard onStop")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d("TAG", "Fragment onDestroyView")
+        Log.d("TAG", "Fragment onBoard onDestroyView")
     }
 }

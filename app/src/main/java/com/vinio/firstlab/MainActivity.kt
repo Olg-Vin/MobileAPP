@@ -6,70 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupActionBarWithNavController
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        if (savedInstanceState == null) {
-            addFragment(OnboardFragment())
-        }
-    }
-
-    private fun addFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container_view, fragment)
-            .setReorderingAllowed(true)  // Важно для оптимизации порядка транзакций
-            .addToBackStack(null)        // Добавляем в BackStack для обратной навигации
-            .commit()
-    }
-
-    private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container_view, fragment)
-            .setReorderingAllowed(true)
-            .addToBackStack(null)
-            .commit()
-    }
-
-    private fun removeFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .remove(fragment)
-            .commit()
-    }
-
-    fun navigateToSignIn() {
-        replaceFragment(SignInFragment())
-    }
-
-//    через строки
-    fun navigateToSignIn(userName: String, email: String, password: String) {
-        val signInFragment = SignInFragment().apply {
-            arguments = Bundle().apply {
-                putString("userName", userName)
-                putString("email", email)
-                putString("password", password)
-            }
-        }
-        replaceFragment(signInFragment)
-    }
-//    через класс
-    fun navigateToSignIn(user: User) {
-        val signInFragment = SignInFragment().apply {
-            arguments = Bundle().apply {
-                putSerializable("user", user)
-            }
-        }
-        replaceFragment(signInFragment)
-    }
-
-
-    fun navigateToSignUp() {
-        replaceFragment(SignUpFragment())
-    }
-
-    fun navigateToHome() {
-        replaceFragment(HomeFragment())
     }
 }

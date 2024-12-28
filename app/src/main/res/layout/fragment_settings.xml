@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:divider="?android:attr/dividerHorizontal"
+        android:showDividers="middle">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Электронная почта"/>
+        <EditText
+            android:id="@+id/change_email"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="test@test" />
+        <Button
+            android:id="@+id/save_email_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Сохранить e-mail"/>
+
+        <!-- Theme Selection -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:text="Тема оформления"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:text="Тёмная"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="16sp" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/theme_switch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:checked="true" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="0.2"
+                android:text="Светлая"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <!-- Language Selection -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Выбор языка"
+            android:textSize="16sp"
+            android:textColor="?attr/colorOnBackground"
+            android:layout_marginTop="16dp" />
+
+        <RadioGroup
+            android:id="@+id/language_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <!-- English language checkbox -->
+            <RadioButton
+                android:id="@+id/checkBox_english"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Английский"
+                android:textSize="16sp"
+                android:textColor="?attr/colorOnBackground"
+                android:layout_marginEnd="16dp" />
+
+            <!-- Russian language checkbox -->
+            <RadioButton
+                android:id="@+id/checkBox_russian"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Русский"
+                android:checked="true"
+                android:textSize="16sp"
+                android:textColor="?attr/colorOnBackground" />
+        </RadioGroup>
+
+        <!-- Font Size -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Размер шрифта"
+            android:textSize="16sp"
+            android:textColor="?attr/colorOnBackground"
+            android:layout_marginTop="16dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/changeFontSize"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.5"
+                android:hint="Размер шрифта"
+                android:layout_marginBottom="20dp"
+                android:inputType="numberDecimal"
+                android:text="16"/>
+            <Button
+                android:id="@+id/save_size_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:text="Применить"/>
+        </LinearLayout>
+
+
+        <!-- Font Size Preview -->
+        <TextView
+            android:id="@+id/font_size_preview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Предпросмотр текста"
+            android:textSize="16sp"
+            android:textColor="?attr/colorOnBackground" />
+
+        <!-- Notifications -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Уведомления"
+                android:textSize="16sp"
+                android:textColor="?attr/colorOnBackground" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/check_notifier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true" />
+        </LinearLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Статус файла -->
+            <TextView
+                android:id="@+id/fileStatusText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Статус файла"
+                android:textSize="16sp"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Кнопка для удаления файла -->
+            <Button
+                android:id="@+id/deleteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Удалить файл"
+                 /> <!-- Видимость будет изменяться в зависимости от наличия файла -->
+            <!-- Кнопка для восстановления файла -->
+            <Button
+                android:id="@+id/restoreButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Восстановить файл"
+                 />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/deleteDB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Очистить базу данных"
+            />
+
+    </LinearLayout>
+</LinearLayout>

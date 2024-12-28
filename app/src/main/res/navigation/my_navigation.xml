@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:id="@+id/my_navigation"
+    app:startDestination="@id/onboardFragment">
+
+    <fragment
+        android:id="@+id/onboardFragment"
+        android:name="com.vinio.firstlab.fragments.OnboardFragment"
+        tools:layout="@layout/fragment_onboard">
+        <action
+            android:id="@+id/action_board_to_signIn"
+            app:destination="@id/signInFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.vinio.firstlab.fragments.SignInFragment"
+        tools:layout="@layout/fragment_signin">
+<!--        <argument-->
+<!--            android:name="name"-->
+<!--            app:argType="string"-->
+<!--            android:defaultValue="-" />-->
+<!--        <argument-->
+<!--            android:name="password"-->
+<!--            app:argType="string"-->
+<!--            android:defaultValue="-" />-->
+        <argument
+            android:name="user"
+            app:argType="com.vinio.firstlab.entity.User"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+        <action
+            android:id="@+id/action_signIn_to_home"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_signIn_to_signUp"
+            app:destination="@id/signUpFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.vinio.firstlab.fragments.SignUpFragment"
+        tools:layout="@layout/fragment_signup">
+        <action
+            android:id="@+id/action_signUp_to_singIn"
+            app:destination="@id/signInFragment">
+<!--            <argument-->
+<!--                android:name="name"-->
+<!--                app:argType="string"-->
+<!--                android:defaultValue="-" />-->
+<!--            <argument-->
+<!--                android:name="password"-->
+<!--                app:argType="string"-->
+<!--                android:defaultValue="-" />-->
+            <argument
+                android:name="user"
+                app:argType="com.vinio.firstlab.entity.User" />
+        </action>
+
+        <action
+            android:id="@+id/action_signUp_to_home"
+            app:destination="@id/homeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.vinio.firstlab.fragments.HomeFragment"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_home_to_recycle"
+            app:destination="@id/recycleNav"/>
+        <action
+            android:id="@+id/action_home_to_settings"
+            app:destination="@id/settingsNav"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/recycleNav"
+        android:name="com.vinio.firstlab.network.RecyclerViewFragment"
+        tools:layout="@layout/fragment_recycler_view">
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsNav"
+        android:name="com.vinio.firstlab.saves.SettingsFragment"
+        tools:layout="@layout/fragment_settings">
+    </fragment>
+
+</navigation>
